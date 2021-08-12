@@ -31,9 +31,37 @@ namespace IssueTracker.Controllers
         }
 
         // POST action
+        [HttpPost]
+        public IActionResult Create(Issue issue)
+        {
+            // this code will add/create a new issue
+            IssueService.Add(issue);
+            return CreatedAtAction(nameof(Create), new {id = issue.Id}, issue);
+        }
 
         // PUT action
+        [HttpPut("{id")]
+        public IActionResult Update(int id, Issue issue)
+        {
+            // this code will update an issue and return a result
+            if (id != issue.Id)
+                return BadRequest();
+
+            var existingIssue = IssueService.Get(id);
+            if (existingIssue is null)
+                return NotFound();
+
+            IssueService.Update(issue);
+
+            return NoContent();
+        }
+
 
         // DELETE action
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            // this code will delete the issue and return a result
+        }
     }
 }

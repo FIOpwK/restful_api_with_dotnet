@@ -62,6 +62,14 @@ namespace IssueTracker.Controllers
         public IActionResult Delete(int id)
         {
             // this code will delete the issue and return a result
+            var issue = IssueService.Get(id);
+
+            if (issue is null)
+                return NotFound();
+
+            IssueService.Delete(id);
+
+            return NoContent();
         }
     }
 }
